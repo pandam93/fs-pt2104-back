@@ -25,7 +25,7 @@ const userSchema = new Schema({
   profile_pic: {
     type: String,
     unique: false,
-    required: true,
+    required: false,
   },
   enabled: {
     type: Boolean,
@@ -33,6 +33,4 @@ const userSchema = new Schema({
   },
 });
 
-const users = mongoose.model("users", userSchema);
-
-module.exports = Users;
+module.exports = mongoose.model("Users", userSchema);

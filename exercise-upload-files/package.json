@@ -4,6 +4,8 @@
   "description": "- Empieza configurando un proyecto desde 0. Recuerda:     - npm init (o npm init -y)     - npm i express mongoose     - npm i -D nodemon     - genera toda la estructura de carpetas y ficheros correspondientes",
   "main": "index.js",
   "scripts": {
+    "start": "node ./index.js",
+    "dev": "nodemon ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
