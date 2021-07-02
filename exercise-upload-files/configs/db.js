@@ -9,7 +9,12 @@ const mongooseConfigs = {
 
 mongoose
   .connect("mongodb://localhost/usersDB", mongooseConfigs)
-  .then(() => console.info("> succesfully connected to mongoDB"))
+  .then(() =>
+    console.info(
+      "> succesfully connected to mongoDB",
+      "\nSuerte, la vas a necesitar."
+    )
+  )
   .catch((error) => {
     console.error("> error trying to connect to mongoDB: ", error.message);
     process.exit(0);

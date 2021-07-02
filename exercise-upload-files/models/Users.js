@@ -20,7 +20,7 @@ const userSchema = new Schema({
   birthdate: {
     type: Date,
     unique: false,
-    required: false,
+    required: true,
   },
   profile_pic: {
     type: String,
@@ -29,7 +29,7 @@ const userSchema = new Schema({
   },
   enabled: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 });
 
