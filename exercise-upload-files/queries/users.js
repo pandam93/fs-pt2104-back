@@ -30,6 +30,7 @@ const getUser = async (username) => {
 
 const editUser = async (id, { name, profile_pic }) => {
   return await UserModel.findOneAndUpdate(
+    { _id: id },
     {
       name,
       profile_pic,
@@ -38,8 +39,23 @@ const editUser = async (id, { name, profile_pic }) => {
   ).select("-_id -__v");
 };
 
+const disableUser = async (username) => {
+  return await UserModel.findOneAndUpdate(
+    { username },
+    {
+      enabled: false,
+    }
+  );
+};
+
+const deleteUser = async (username) => {
+  return await UserModel.deleteOne({ username });
+};
+
 module.exports = {
   createUser,
   getUser,
   editUser,
+  disableUser,
+  deleteUser,
 };
