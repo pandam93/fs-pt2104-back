@@ -1,67 +1,57 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const GeoSchema = {
-  latitude: {
-    type: Number,
-    require: true,
-  },
-  longitude: {
-    type: Number,
-    require: true,
-  },
-};
-
-const LandingSchema = new Schema({
-  name: {
+const NeasSchema = new Schema({
+  designation: {
     type: String,
     required: false,
     unique: false,
   },
-  nametype: {
+  discovery_date: {
     type: String,
     required: false,
     unique: false,
   },
-  recclass: {
+  h_mag: {
+    type: Number,
+    required: false,
+    unique: false,
+  },
+  moid_au: {
+    type: Number,
+    required: false,
+    unique: false,
+  },
+  q_au_1: {
+    type: Number,
+    required: false,
+    unique: false,
+  },
+  q_au_2: {
+    type: Number,
+    required: false,
+    unique: false,
+  },
+  period_yr: {
+    type: Number,
+    required: false,
+    unique: false,
+  },
+  i_deg: {
+    type: Number,
+    required: false,
+    unique: false,
+  },
+  pha: {
     type: String,
     required: false,
     unique: false,
   },
-  fall: {
+  orbit_class: {
     type: String,
     required: false,
     unique: false,
-  },
-  year: {
-    type: String,
-    required: false,
-    unique: false,
-  },
-  id: {
-    type: Number,
-    required: false,
-    unique: false,
-  },
-  mass: {
-    type: Number,
-    required: false,
-    unique: false,
-  },
-  reclat: {
-    type: Number,
-    required: false,
-    unique: false,
-  },
-  reclong: {
-    type: Number,
-    required: false,
-    unique: false,
-  },
-  geolocation: {
-    type: GeoSchema,
-    require: false,
   },
 });
 
-module.exports = mongoose.model("Landings", LandingSchema);
+module.exports = mongoose.model("Neas", NeasSchema);

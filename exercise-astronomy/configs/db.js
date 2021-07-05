@@ -9,12 +9,13 @@ const mongooseConfigs = {
 
 mongoose
   .connect("mongodb://localhost/astronomy", mongooseConfigs)
-  .then(() =>
+  .then(() => {
+    console.log(`"<-------- Reloaded ---------->"`);
     console.info(
       "> succesfully connected to mongoDB",
       "\nSuerte, la vas a necesitar."
-    )
-  )
+    );
+  })
   .catch((error) => {
     console.error("> error trying to connect to mongoDB: ", error.message);
     process.exit(0);
