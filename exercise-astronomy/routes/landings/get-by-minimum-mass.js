@@ -1,7 +1,8 @@
 const { getByMinimumMass } = require("../../queries/landings");
 
 module.exports = async (req, res, next) => {
-  const result = await getByMinimumMass();
+  const { minimum_mass } = req.query;
+  const result = await getByMinimumMass(minimum_mass);
 
   if (result === false) {
     return next({

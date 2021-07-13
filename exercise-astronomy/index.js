@@ -21,5 +21,6 @@ app.use(({ status = 400, info }, req, res, next) => {
 });
 
 app.listen(PORT, () => {
+  console.clear();
   console.log(`Example app listening at http://localhost:${PORT}`);
 });

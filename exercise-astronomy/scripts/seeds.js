@@ -24,6 +24,7 @@ const populateNeasCollection = async () => {
 
 const main = async () => {
   await populateLandingCollection();
+  await populateNeasCollection();
   process.exit(0);
 };
 

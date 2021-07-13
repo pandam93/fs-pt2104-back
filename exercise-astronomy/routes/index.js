@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
-router.use("/astronomy", require("./landings"));
-router.use("/astronomy", require("./neas"));
-router.use("/astronomy", require("./users"));
+router.use("/api/astronomy/landings", require("./landings"));
+router.use("/api/astronomy/neas", require("./neas"));
+router.use("/api/astronomy/users", require("./users"));
 
 module.exports = router;

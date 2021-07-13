@@ -1,8 +1,9 @@
-const { getByClassName } = require("../../queries/landings");
+const { getDangerousNeas } = require("../../queries/neas");
 
 module.exports = async (req, res, next) => {
-  const { recclass } = req.params;
-  const result = await getByClassName(recclass);
+  const { pha } = req.query;
+
+  const result = await getDangerousNeas(pha);
 
   if (result === false) {
     return next({

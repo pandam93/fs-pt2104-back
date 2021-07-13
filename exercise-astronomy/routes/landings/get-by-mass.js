@@ -1,8 +1,8 @@
-const { getByClassName } = require("../../queries/landings");
+const { getByMass } = require("../../queries/landings");
 
 module.exports = async (req, res, next) => {
-  const { recclass } = req.params;
-  const result = await getByClassName(recclass);
+  const { mass } = req.params;
+  const result = await getByMass(mass);
 
   if (result === false) {
     return next({

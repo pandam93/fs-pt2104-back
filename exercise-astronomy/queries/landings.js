@@ -2,23 +2,23 @@ const LandingModel = require("../models/Landings");
 
 const getAllLandings = async () => {
   try {
-    return await LandingModel.find({}, { _id: 0, __v: 0 });
+    return await LandingModel.find({}, { __v: 0 });
   } catch (error) {
     return false;
   }
 };
 
-const getByMinimumMass = async () => {
+const getByMinimumMass = async (minMass) => {
   try {
-    return await LandingModel.find({});
+    return await LandingModel.find({ mass: { $gte: minMass } });
   } catch (error) {
     return false;
   }
 };
 
-const getByClassName = async (orbit_class) => {
+const getByClassName = async (recclass) => {
   try {
-    return await LandingModel.find({ orbit_class });
+    return await LandingModel.find({ recclass }).select("name recclass -_id");
   } catch (error) {
     return false;
   }
@@ -26,13 +26,35 @@ const getByClassName = async (orbit_class) => {
 
 const getByDate = async (from, to) => {
   try {
-    console.log(from.toJSON().split("T")[0], to.toJSON().split("T")[0]);
+    if (from === undefined) {
+      return await LandingModel.find({
+        year: {
+          $lte: to,
+        },
+      }).select("name mass year -_id");
+    } else if (to === undefined) {
+      return await LandingModel.find({
+        year: {
+          $gte: from,
+        },
+      }).select("name mass year -_id");
+    }
     return await LandingModel.find({
-      discovery_date: {
-        $gte: from.toJSON().split("T")[0],
-        $lte: to.toJSON().split("T")[0],
+      year: {
+        $gte: from,
+        $lte: to,
       },
-    });
+    }).select("name mass year -_id");
+  } catch (error) {
+    return false;
+  }
+};
+
+const getByMass = async (massToFind) => {
+  try {
+    return await LandingModel.find({ mass: massToFind }).select(
+      "name mass -_id"
+    );
   } catch (error) {
     return false;
   }
@@ -43,4 +65,5 @@ module.exports = {
   getByMinimumMass,
   getByClassName,
   getByDate,
+  getByMass,
 };

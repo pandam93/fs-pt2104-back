@@ -1,8 +1,11 @@
-const { getByClassName } = require("../../queries/landings");
+const { getUserPoints } = require("../../queries/users");
 
 module.exports = async (req, res, next) => {
-  const { recclass } = req.params;
-  const result = await getByClassName(recclass);
+  const userAfNum = req.params.user;
+
+  const result = await getUserPoints(userAfNum);
+
+  console.log(result);
 
   if (result === false) {
     return next({

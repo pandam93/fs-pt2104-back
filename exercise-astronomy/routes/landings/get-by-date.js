@@ -2,7 +2,6 @@ const { getByDate } = require("../../queries/landings");
 
 module.exports = async (req, res, next) => {
   const { from, to } = req.query;
-  console.log(from, to);
   const result = await getByDate(from, to);
 
   if (result === false) {

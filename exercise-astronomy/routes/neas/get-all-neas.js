@@ -1,8 +1,7 @@
-const { getByClassName } = require("../../queries/landings");
+const { getAllNeas } = require("../../queries/neas");
 
 module.exports = async (req, res, next) => {
-  const { recclass } = req.params;
-  const result = await getByClassName(recclass);
+  const result = await getAllNeas();
 
   if (result === false) {
     return next({

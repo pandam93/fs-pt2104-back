@@ -1,8 +1,9 @@
-const { getByClassName } = require("../../queries/landings");
+const { getUserNecs } = require("../../queries/users");
 
 module.exports = async (req, res, next) => {
-  const { recclass } = req.params;
-  const result = await getByClassName(recclass);
+  const userAfNum = req.params.user;
+
+  const result = await getUserNecs(userAfNum);
 
   if (result === false) {
     return next({

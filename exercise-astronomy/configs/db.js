@@ -10,7 +10,6 @@ const mongooseConfigs = {
 mongoose
   .connect("mongodb://localhost/astronomy", mongooseConfigs)
   .then(() => {
-    console.log(`"<-------- Reloaded ---------->"`);
     console.info(
       "> succesfully connected to mongoDB",
       "\nSuerte, la vas a necesitar."
