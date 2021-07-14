@@ -1,7 +1,9 @@
-const { getAllLandings } = require("../../queries/landings");
+const { softDeleteUser } = require("../../queries/users");
 
 module.exports = async (req, res, next) => {
-  const result = await getAllLandings();
+  const userAfNum = req.params.user;
+
+  const result = await softDeleteUser(userAfNum);
 
   if (!result) {
     return next({

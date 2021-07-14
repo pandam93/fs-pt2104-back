@@ -1,7 +1,9 @@
-const { getAllLandings } = require("../../queries/landings");
+const { deleteUser } = require("../../queries/users");
 
 module.exports = async (req, res, next) => {
-  const result = await getAllLandings();
+  const userAfNum = req.params.user;
+
+  const result = await deleteUser(userAfNum);
 
   if (!result) {
     return next({

@@ -5,15 +5,18 @@ module.exports = async (req, res, next) => {
 
   const result = await getUserBadges(userAfNum);
 
-  if (result === false) {
+  if (!result) {
     return next({
       status: 500,
       info: new Error("Try again a bit later"),
     });
   }
 
+  //Por si es dar solo los que tiene conseguidos.
+  const getUserGivenBadges = result.badges.filter((element) => element.given);
+
   res.status(200).json({
     success: true,
-    data: result,
+    data: getUserGivenBadges,
   });
 };

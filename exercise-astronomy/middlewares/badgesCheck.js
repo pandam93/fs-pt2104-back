@@ -1,41 +1,40 @@
-// module.exports = (req, res, next) => {
-//   console.log(res.locals.userNeas, res.locals.userNecs);
+const { updateBadge } = require("../queries/users");
 
-//   const updateBadge = require("../queries/users");
+module.exports = async (req, res, next) => {
+  const userAfNum = req.params.user;
+  const { userBadges, userNecs, userNeas } = req.locals;
 
-//   const { userNeas, userNecs, nec, badges, affiliatedNumber } = res.locals;
+  console.log(userBadges[2], userNecs.length);
+  //check the constraints to earn the second badge
+  if (!userBadges[2].given && userNecs.length === 0) {
+    await updateBadge(userAfNum, "First NEC discovered!", 100);
+  }
 
-//   const duplicate = userNecs.find((element) => element == nec);
+  //check the constrainst to earn the third and fourth badge
+  const astroDiscoverings = userNeas.length + userNecs.length;
 
-//   if (duplicate) {
-//     res.status(200).json({
-//       success: true,
-//       data: "Nec alredy added!",
-//     });
-//     return true;
-//   }
+  if (astroDiscoverings >= 5 && !userBadges[3].given) {
+    await updateBadge(userAfNum, "Road to NE-lhalla!", 500);
+  }
+  if (astroDiscoverings >= 10 && !userBadges[4].given) {
+    await updateBadge(userAfNum, "Master of universe!", 1000);
+  }
 
-//   if (!badges[2].given && userNecs.length === 1) {
-//     await updateBadge(affiliatedNumber, "First NEC discovered!", 100);
-//   }
+  //check the constraint to earn the fifth badge
+  const completedBadges = userBadges;
 
-//   const astroDiscoverings = userNeas.length + userNecs.length;
+  const checkBadgesCompleted = completedBadges.reduce((acc, el) => {
+    if (el.given) return acc + 1;
+    else return acc;
+  }, 0);
 
-//   if (astroDiscoverings >= 5 && !badges[3].given) {
-//     await updateBadge(affiliatedNumber, "Road to NE-lhalla!", 500);
-//   }
-//   if (astroDiscoverings >= 10 && !badges[4].given) {
-//     await updateBadge(affiliatedNumber, "Master of universe!", 1000);
-//   }
+  if (!userBadges[5].given && checkBadgesCompleted === 5) {
+    await updateBadge(userAfNum, "The best astronomer!", 1000);
+  }
 
-//   const checkBadgesCompleted = badges.reduce((acc, el) => {
-//     if (el.given) return acc + 1;
-//     else return acc;
-//   }, 0);
-
-//   if (!badges[5].given && checkBadgesCompleted === 5) {
-//     await updateBadge(affiliatedNumber, "The best astronomer!", 1000);
-//   }
-
-//   res.send();
-// };
+  //TODO: agregar notificación de si se ha completado un badge, no?
+  res.status(200).json({
+    success: true,
+    info: "Nea added succesfully!",
+  });
+};

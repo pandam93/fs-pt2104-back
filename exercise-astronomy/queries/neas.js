@@ -18,13 +18,39 @@ const getByClass = async (orbit_class) => {
   }
 };
 
-const getDangerousNeas = async (pha) => {
-  if (!pha) {
+//TODO: hay que hacer el middleware que valide los datos de usuario...
+const getByDate = async (from, to) => {
+  try {
+    if (!from && to) {
+      return await NeasModel.find({
+        discovery_date: {
+          $lte: to,
+        },
+      }).select("designation discovery_date period_yr -_id");
+    }
+    if (!to && from) {
+      return await NeasModel.find({
+        discovery_date: {
+          $gte: from,
+        },
+      }).select("designation discovery_date period_yr -_id");
+    }
+    if (from && to) {
+      return await NeasModel.find({
+        discovery_date: {
+          $gte: from,
+          $lte: to,
+        },
+      }).select("designation discovery_date period_yr -_id");
+    }
+  } catch (error) {
     return false;
   }
+};
 
+const getDangerousNeas = async (pha) => {
+  //DANGEROUS
   if (pha === "1") {
-    //DANGEROUS
     try {
       return await NeasModel.find({
         pha: "Y",
@@ -34,8 +60,9 @@ const getDangerousNeas = async (pha) => {
     } catch (error) {
       return false;
     }
-  } else if (pha === "0") {
-    //NOT DANGEROUS
+  }
+  //NOT DANGEROUS
+  if (pha === "0") {
     try {
       return await NeasModel.find({
         pha: "N",
@@ -45,8 +72,9 @@ const getDangerousNeas = async (pha) => {
     } catch (error) {
       return false;
     }
-  } else if (pha === "-1") {
-    // UNKNOW
+  }
+  // UNKNOW
+  if (pha === "-1") {
     try {
       return await NeasModel.find({
         pha: "n/a",
@@ -59,25 +87,31 @@ const getDangerousNeas = async (pha) => {
 
 const getByPeriod = async (from, to) => {
   try {
-    if (from === undefined) {
+    // we just got to
+    if (!from && to) {
       return await NeasModel.find({
         period_yr: {
           $lte: to,
         },
       }).select("designation discovery_date period_yr -_id");
-    } else if (to === undefined) {
+    }
+    //we just got from
+    if (!to && from) {
       return await NeasModel.find({
         period_yr: {
           $gte: from,
         },
       }).select("designation discovery_date period_yr -_id");
     }
-    return await NeasModel.find({
-      period_yr: {
-        $gte: from,
-        $lte: to,
-      },
-    }).select("designation discovery_date period_yr -_id");
+    //we got both
+    if (from && to) {
+      return await NeasModel.find({
+        period_yr: {
+          $gte: from,
+          $lte: to,
+        },
+      }).select("designation discovery_date period_yr -_id");
+    }
   } catch (error) {
     return false;
   }
@@ -86,6 +120,7 @@ const getByPeriod = async (from, to) => {
 module.exports = {
   getAllNeas,
   getByClass,
+  getByDate,
   getDangerousNeas,
   getByPeriod,
 };

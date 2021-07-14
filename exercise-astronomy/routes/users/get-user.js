@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
   const age = getAge(result.birthdate);
   const { birthdate, ...data } = { ...result, age };
 
-  if (result === false) {
+  if (!result) {
     return next({
       status: 500,
       info: new Error("Try again a bit later"),

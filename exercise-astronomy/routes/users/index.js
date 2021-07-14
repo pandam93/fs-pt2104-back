@@ -10,9 +10,15 @@ const modifyUserData = require("./modify-user-data");
 const addNea = require("./add-nea");
 const addNec = require("./add-nec");
 const getAllUsers = require("./get-all-users");
-const { badgesCheck } = require("../../middlewares");
+const {
+  badgesCheck,
+  duplicateNeasCheck,
+  duplicateNecsCheck,
+} = require("../../middlewares");
+const softDeleteUser = require("./soft-delete-user");
+const deleteUser = require("./delete-user");
 
-router.post("/guild", createNewUser);
+router.post("/", createNewUser);
 
 router.get("/all", getAllUsers);
 router.get("/:user", getUser);
@@ -22,7 +28,10 @@ router.get("/:user/necs", getUserNecs);
 router.get("/:user/points", getUserPoints);
 
 router.put("/:user/edit", modifyUserData);
-router.put("/:user/neas", addNea);
-router.put("/:user/necs", addNec);
+router.put("/:user/neas", addNea, duplicateNeasCheck, badgesCheck);
+router.put("/:user/necs", addNec, duplicateNecsCheck, badgesCheck);
+router.put("/:user/delete", softDeleteUser);
+
+router.delete("/:user/", deleteUser);
 
 module.exports = router;

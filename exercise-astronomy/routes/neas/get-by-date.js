@@ -1,7 +1,8 @@
-const { getAllLandings } = require("../../queries/landings");
+const { getByDate } = require("../../queries/neas");
 
 module.exports = async (req, res, next) => {
-  const result = await getAllLandings();
+  const { from, to } = req.query;
+  const result = await getByDate(from, to);
 
   if (!result) {
     return next({

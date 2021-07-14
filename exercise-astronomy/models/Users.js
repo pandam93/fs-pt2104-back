@@ -33,7 +33,7 @@ const UserSchema = new Schema({
   nickname: {
     type: String,
     required: false,
-    unique: false,
+    unique: true,
   },
   affiliatedNumber: {
     type: Number,
@@ -58,7 +58,6 @@ const UserSchema = new Schema({
   deleted: {
     type: Boolean,
     default: false,
-    unique: false,
   },
   astronomicalPoints: {
     type: Number,
@@ -68,8 +67,6 @@ const UserSchema = new Schema({
   badges: [
     {
       type: BadgeSchema,
-      required: false,
-      unique: false,
     },
   ],
   neasDiscovered: [

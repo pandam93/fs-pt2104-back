@@ -26,13 +26,13 @@ const getByClassName = async (recclass) => {
 
 const getByDate = async (from, to) => {
   try {
-    if (from === undefined) {
+    if (!from) {
       return await LandingModel.find({
         year: {
           $lte: to,
         },
       }).select("name mass year -_id");
-    } else if (to === undefined) {
+    } else if (!to) {
       return await LandingModel.find({
         year: {
           $gte: from,

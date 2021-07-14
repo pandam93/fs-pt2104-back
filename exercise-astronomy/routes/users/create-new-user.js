@@ -1,7 +1,8 @@
 const { createNewUser } = require("../../queries/users");
 
 module.exports = async (req, res, next) => {
-  //Agragar validaciones (?)
+  //TODO: Agragar validaciones y refactorizar esto más bonito y quizá que el AffiliatedNumber
+  //se cree aleatoriamente con XXX-XXX-XXX ese patrón.
   const data = ({
     name,
     nickname,
@@ -53,7 +54,7 @@ module.exports = async (req, res, next) => {
   const userData = { ...data, badges: initialBadges };
   const result = await createNewUser(userData);
 
-  if (result === false) {
+  if (!result) {
     return next({
       status: 500,
       info: new Error("Try again a bit later"),

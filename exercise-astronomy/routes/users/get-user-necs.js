@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
 
   const result = await getUserNecs(userAfNum);
 
-  if (result === false) {
+  if (!result) {
     return next({
       status: 500,
       info: new Error("Try again a bit later"),

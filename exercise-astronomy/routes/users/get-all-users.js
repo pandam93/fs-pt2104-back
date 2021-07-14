@@ -3,7 +3,7 @@ const { getAllUsers } = require("../../queries/users");
 module.exports = async (req, res, next) => {
   const result = await getAllUsers();
 
-  if (result === false) {
+  if (!result) {
     return next({
       status: 500,
       info: new Error("Try again a bit later"),

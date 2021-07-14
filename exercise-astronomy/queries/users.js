@@ -2,7 +2,7 @@ const UserModel = require("../models/Users");
 
 const getAllUsers = async () => {
   try {
-    return await UserModel.find()
+    return await UserModel.find({ deleted: false })
       .populate("neasDiscovered", "designation")
       .populate("necsDiscovered", "name")
       .select("-_id -__v");
@@ -27,7 +27,7 @@ const getUser = async (userAfNum) => {
       .lean()
       // .populate("neasDiscovered", "designation -_id")
       // .populate("necsDiscovered", "name -_id")
-      //TODO:
+      //TODO: Mirar bien
       .select(
         "name birthdate occupation affiliatedNumber astronomicalPoints affiliationDate -_id"
       );
@@ -78,11 +78,12 @@ const getUserPoints = async (userAfNum) => {
   }
 };
 
-const modifyUserData = async (userAfNum, nickname, occupation) => {
+const modifyUserData = async (userAfNum, occupation, nickname) => {
   try {
     return await UserModel.findOneAndUpdate(
       { affiliatedNumber: userAfNum },
-      { nickname, occupation }
+      { nickname, occupation },
+      { new: true }
     );
   } catch (error) {
     return false;
@@ -93,8 +94,7 @@ const addNea = async (userAfNum, nea) => {
   try {
     return await UserModel.findOneAndUpdate(
       { affiliatedNumber: userAfNum },
-      { $addToSet: { neasDiscovered: nea } },
-      { new: true }
+      { $addToSet: { neasDiscovered: nea } }
     );
   } catch (error) {
     return false;
@@ -136,6 +136,27 @@ const updateBadge = async (affiliatedNumber, badgeName, points) => {
   }
 };
 
+const softDeleteUser = async (userAfNum) => {
+  try {
+    return await UserModel.findOneAndUpdate(
+      { affiliatedNumber: userAfNum },
+      { deleted: true }
+    );
+  } catch (error) {
+    return false;
+  }
+};
+
+const deleteUser = async (userAfNum) => {
+  try {
+    return await UserModel.deleteOne({
+      affiliatedNumber: userAfNum,
+    });
+  } catch (error) {
+    return false;
+  }
+};
+
 module.exports = {
   getAllUsers,
   createNewUser,
@@ -149,4 +170,6 @@ module.exports = {
   addNec,
   updateBadge,
   countRegisters,
+  softDeleteUser,
+  deleteUser,
 };

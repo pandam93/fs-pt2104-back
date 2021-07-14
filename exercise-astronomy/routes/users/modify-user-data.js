@@ -4,11 +4,12 @@ module.exports = async (req, res, next) => {
   const userAfNum = req.params.user;
   const { occupation, nickname } = req.body;
 
+  console.log("oc", occupation);
+  console.log("nm", nickname);
+
   const result = await modifyUserData(userAfNum, occupation, nickname);
 
-  console.log("> result", result);
-
-  if (result === false) {
+  if (!result) {
     return next({
       status: 500,
       info: new Error("Try again a bit later"),
