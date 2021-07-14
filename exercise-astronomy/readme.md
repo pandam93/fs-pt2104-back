@@ -8,6 +8,7 @@
 
     1. GET para obtener nombre y masa de todos aquellos meteoritos cuya masa sea igual o superior a una masa (gr) dada (con query parameters)
     - Ejemplo: `/astronomy/landings?minimum_mass=200000`
+    - http://localhost:3000/api/astronomy/landings/mass?minimum_mass=2000
 
     2. GET para obtener nombre y masa de uno o más meteoritos cuya masa sea la especificada (route params)
     - Ejemplo: `/astronomy/landings/mass/200000`
