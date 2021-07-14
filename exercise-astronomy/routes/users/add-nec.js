@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
     badges: userBadges,
   } = result;
 
-  req.locals = { userNecs, userNeas, userBadges };
+  req.locals = { userNecs, userNeas, userBadges, nec };
 
   next();
 };

@@ -13,13 +13,15 @@ module.exports = async (req, res, next) => {
     });
   }
 
+  console.log(result);
+
   const {
     necsDiscovered: userNecs,
     neasDiscovered: userNeas,
     badges: userBadges,
   } = result;
 
-  req.locals = { userNecs, userNeas, userBadges };
+  req.locals = { userNecs, userNeas, userBadges, nea };
 
   next();
 };

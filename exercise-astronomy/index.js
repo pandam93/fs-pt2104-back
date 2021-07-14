@@ -2,7 +2,7 @@ require("./configs/db");
 const express = require("express");
 const path = require("path");
 const app = express();
-const { PORT } = require("./constants");
+const { PORT, BADGES } = require("./constants");
 
 app.use(express.json());
 app.use("/public", express.static(path.join(__dirname, "uploads")));
@@ -21,6 +21,5 @@ app.use(({ status = 400, info }, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.clear();
   console.log(`Example app listening at http://localhost:${PORT}`);
 });
